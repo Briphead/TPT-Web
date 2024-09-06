@@ -1,50 +1,80 @@
-<!doctype html>
-<html lang="en">
-<body>
-<style>
-	canvas.emscripten {
-		display: block;
-		border: 0px none;
-		background-color: white;
-	}
 
-	div.Subpage {
-		display: flex;
-		justify-content: center;
-	}
-</style>
-<p id="status">Loading...</p>
-<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="icon" type="image/png" href="https://powdertoy.co.uk/favicon.png" />
+		<link rel="shortcut icon" href="https://powdertoy.co.uk/favicon.ico" />
+		<link rel="stylesheet" href="https://powdertoy.co.uk/Themes/Next/Design/Main.css" type="text/css" />
+<link rel="stylesheet" href="https://powdertoy.co.uk/Themes/Next/Design/Wasm.css" type="text/css" />
+		<script src="https://powdertoy.co.uk/Themes/Next/Javascript/jQuery.min.js"></script> 
+		<script src="https://powdertoy.co.uk/Themes/Next/Javascript/bootstrap.min.js"></script>
+		<script src="https://powdertoy.co.uk/Themes/Next/Javascript/Main.js"></script> 
+				<title>The Powder Toy - Wasm</title>
+		<meta name="keywords" content="The powder toy, simons powder toy, toy, game, dust, desktop powder toy, simon, game, desktop game, play, sandbox, physics, falling sand game" />
+		<meta name="description" content="The Powder Toy is a desktop version of the classic 'falling sand' physics sandbox game, it simulates air pressure and velocity as well as heat!" />
+		<meta name="application-name" content="Browse Powder Toy Saves" />
+		<meta name="msapplication-tooltip" content="Powder Toy User Content" />
+		<meta name="msapplication-window" content="width=960;height=950" />
+		<meta name="msapplication-navbutton-color" content="#FF8800" />
+		<meta name="msapplication-starturl" content="./Browse.html" />
+		<meta property="og:image" content="http://powdertoy.co.uk/Themes/Next/Design/Images/FBIcon.png" />
+			</head>
+	<body>		<div class="container">
+			<header class="site-header">
+				<div class="title">
+					<h1>The Powder Toy</h1>
+					<div class="clear"></div>
+				</div>
+				<div class="main-menu">
+					<ul class="nav nav-pills pull-left"><li class="item"><a href="https://powdertoy.co.uk/Download.html">Download</a></li><li class="item"><a href="https://powdertoy.co.uk/Discussions/Categories/Index.html">Forum</a></li><li class="item"><a href="/Browse.html">Browse</a></li><li class="item"><a href="/Wiki/W/Main_Page.html">Wiki</a></li><li class="item"><a href="/FAQ.html">FAQ</a></li><li class="active"><a href="https://powdertoy.co.uk/Wasm.html">Play online</a></li><li class="item"><a href="https://powdertoy.co.uk/Register.html">Register</a></li><li class="item"><a href="https://powdertoy.co.uk/Login.html">Login</a></li></ul>
+										<form method="GET" action="https://powdertoy.co.uk/Search.html" class="navbar-search span2 pull-right">
+	<input class="span2" type="text" name="Search_Query" title="Search Site" value=""/>
+	
+</form>				</div>
+			</header>
+		</div>
+				<div class="container contents">
+			<div class="Page" id="Page">
+												<div class="Subpage">					<form id="PowderSessionInfo" style="display: none;">
+<input type="hidden" name="Username" value=""/>
+<input type="hidden" name="SessionKey" value=""/>
+</form>
+<p id="status" style="display: none;">Loading...</p>
+<img id="loading" src="https://powdertoy.co.uk/Themes/Next/Design/Images/wasm-loading.webp"/>
+<canvas style="display: none;" class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 <script type='text/javascript'>
 	(() => {
 		var promise;
 
-		window.create_powderbeta_loader = () => {
+		window.create_powder_loader = () => {
 			if (promise === undefined) {
 				promise = new Promise((resolve, reject) => {
 					const script = document.createElement("script");
 					script.onload = () => {
-						resolve(window.create_powderbeta);
+						resolve(window.create_powder);
 					};
 					document.head.appendChild(script);
-					script.src = 'powderbeta.js';
+					script.src = 'https://powdertoy.co.uk/wasm/powder.js';
 				});
 			}
 			return promise;
 		};
 	})();
 	(() => {
+		var canvas = document.getElementById('canvas');
 		var status = document.getElementById('status');
+		var loading = document.getElementById('loading');
 		window.mark_presentable = function() {
-			status.style.display = 'none';
+			loading.style.display = 'none';
+			canvas.style.display = 'initial';
 		};
 		window.onerror = (event) => {
 			status.innerText = 'Exception thrown, see JavaScript console';
 			status.style.display = 'initial';
 		};
-		create_powderbeta_loader().then(create_powderbeta => create_powderbeta({
+		create_powder_loader().then(create_powder => create_powder({
 			canvas: (() => {
-				var canvas = document.getElementById('canvas');
 				canvas.addEventListener("webglcontextlost", e => {
 					alert('WebGL context lost. You will need to reload the page.'); e.preventDefault();
 				}, false);
@@ -55,5 +85,15 @@
 		}));
 	})();
 </script>
-</body>
+				</div>			</div>
+					</div>
+		<div class="container">
+			<footer>
+				<div class="Copyright"></div>
+				<div class="FooterExtra">Generated: 0.00s</div>
+				<div class="FooterTOS"><a href="https://powdertoy.co.uk/Privacy.html">Privacy Policy</a></div>
+				<div class="Clear"></div>
+			</footer>
+		</div>
+			</body>
 </html>
