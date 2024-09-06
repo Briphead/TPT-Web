@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<body>
+<style>
+	canvas.emscripten {
+		display: block;
+		border: 0px none;
+		background-color: white;
+	}
+
+	div.Subpage {
+		display: flex;
+		justify-content: center;
+	}
+</style>
+<p id="status">Loading...</p>
+<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+<script type='text/javascript'>
+	(() => {
+		var promise;
+
+		window.create_powderbeta_loader = () => {
+			if (promise === undefined) {
+				promise = new Promise((resolve, reject) => {
+					const script = document.createElement("script");
+					script.onload = () => {
+						resolve(window.create_powderbeta);
+					};
+					document.head.appendChild(script);
+					script.src = 'powderbeta.js';
+				});
+			}
+			return promise;
+		};
+	})();
+	(() => {
+		var status = document.getElementById('status');
+		window.mark_presentable = function() {
+			status.style.display = 'none';
+		};
+		window.onerror = (event) => {
+			status.innerText = 'Exception thrown, see JavaScript console';
+			status.style.display = 'initial';
+		};
+		create_powderbeta_loader().then(create_powderbeta => create_powderbeta({
+			canvas: (() => {
+				var canvas = document.getElementById('canvas');
+				canvas.addEventListener("webglcontextlost", e => {
+					alert('WebGL context lost. You will need to reload the page.'); e.preventDefault();
+				}, false);
+				return canvas;
+			})(),
+			print: console.log,
+			printErr: console.log,
+		}));
+	})();
+</script>
+</body>
+</html>
